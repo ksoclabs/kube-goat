@@ -27,6 +27,11 @@ The cluster should now be up and running. Go to `Compute Engine` -> `VM Instance
 kubectl get pods --all-namespaces   
 ```
 
+## 3. Delete the Cluster
+```
+kops delete cluster ksoc.insecure.k8s.local
+```
+
 ### IF NO STATE FILE EXISTS OR INSTALLING FROM SCRATCH DO THE FOLLOWING
 
 This isn't necessary if the state file exists...you shouldn't have to do this.
