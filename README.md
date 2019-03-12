@@ -1,8 +1,8 @@
-Create Insecure Cluster for e2e Testing
+# Create Insecure Cluster for e2e Testing
 
 These commands should be run in Google Cloud Shell in the `ksoc-dev` project. They rely on the `gcloud` and `kubectl` command-line utilities to be installed which Cloud Shell already gives us.
 
-### 1. Install Kops
+## 1. Install Kops
 Kops is used to bootstrap a cluster. It relies on a central configuration file that has likely already been created in our GCP project.
 
 ```
