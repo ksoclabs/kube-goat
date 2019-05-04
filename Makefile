@@ -1,12 +1,11 @@
-.DEFAULT_GOAL = all
+.DEFAULT_GOAL = help
 
-.PHONY: all
-all: fmt
+include basic.mk deps.mk
 
-.PHONY: fmt
-fmt: ## formats files
-	prettier \
-		--parser markdown \
-		--prose-wrap always \
-		--write \
-		*.md
+.PHONY: cluster-create
+cluster-create: ## Create kind cluster
+	kind create cluster
+
+.PHONY: cluster-delete
+cluster-delete: ## Delete kind cluster
+	kind delete cluster
