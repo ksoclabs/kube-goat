@@ -22,3 +22,5 @@ To learn more about securing Kubernetes clusters, the following is a non-compreh
 - [Attacking and Defending Kubernetes](https://www.inguardians.com/2018/12/12/attacking-and-defending-kubernetes-bust-a-kube-episode-1/)
 - [Kubernetes Security](https://kubernetes-security.info)
 - [Kubernetes Security Best-Practices](https://dev.to/petermbenjamin/kubernetes-security-best-practices-hlk)
+- [Kubernetes Security Hands-On Labs](https://github.com/ManicodeSecurity/Defending-DevOps)
+
