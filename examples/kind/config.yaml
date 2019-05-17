@@ -1,0 +1,27 @@
+---
+kind: Cluster
+apiVersion: kind.sigs.k8s.io/v1alpha3
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
+kubeadmConfigPatches:
+  - |
+    apiVersion: kubeadm.k8s.io/v1beta1
+    kind: ClusterConfiguration
+    metadata:
+      name: config
+    apiServer:
+      extraArgs:
+        authorization-mode: AlwaysAllow
+        anonymous-auth: true
+  - |
+    apiVersion: kubelet.config.k8s.io/v1beta1
+    kind: KubeletConfiguration
+    metadata:
+      name: config
+    authentication:
+      anonymous:
+        enabled: true
+    authorization:
+      mode: AlwaysAllow
