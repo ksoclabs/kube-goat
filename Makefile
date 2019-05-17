@@ -2,10 +2,20 @@
 
 include basic.mk deps.mk
 
-.PHONY: cluster-create
-cluster-create: ## Create kind cluster
-	kind create cluster
+.PHONY: kind-create-cluster
+kind-create-cluster: ## Create kind cluster
+	kind create cluster --config=$(CURDIR)/examples/kind/config.yaml --name=insecure
 
-.PHONY: cluster-delete
-cluster-delete: ## Delete kind cluster
-	kind delete cluster
+.PHONY: kind-delete-cluster
+kind-delete-cluster: ## Delete kind cluster
+	kind delete cluster --name=insecure
+
+.PHONY: attack
+attack: ## Launches attack scenario for users to start playing
+	kubectl --kubeconfig=$(HOME)/.kube/kind-config-kind \
+		run \
+		-it \
+		--rm \
+		--image=ubuntu \
+		attacker \
+		-- /bin/bash
