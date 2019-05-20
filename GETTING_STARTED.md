@@ -111,18 +111,15 @@ kubeadmConfigPatches:
   mode: "ipvs"
 ```
 
-## Kops
+## KOPS on GCP
 
-### Create Insecure Cluster for e2e Testing
 
-These commands should be run in Google Cloud Shell in the `ksoc-dev` project.
-They rely on the `gcloud` and `kubectl` command-line utilities to be installed
-which Cloud Shell already gives us.
+These commands should be run in Google Cloud Shell in the `ksoc-dev` project. They rely on the `gcloud` and `kubectl` command-line utilities to be installed which Cloud Shell already gives us.
 
-### 1. Install Kops
+## 1. Install Prerequisites
 
-Kops is used to bootstrap a cluster. It relies on a central configuration file
-that has likely already been created in our GCP project.
+### KOPS
+Kops is used to bootstrap a cluster. It relies on a central configuration file. First, install the `kops` binary:
 
 ```
 wget -O kops https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64 && \
@@ -131,38 +128,44 @@ sudo mv ./kops /usr/local/bin/
 ```
 
 Ensure Kops is installed successfully:
-
 ```
 kops version
 ```
 
-### 2.Launch a Cluster
+### GCloud SDK
+Visit https://cloud.google.com/sdk/ for instructions on installing the gcloud CLI.
+Once you are done installing GCloud SDK, you must run, gcloud init, this will configure your gcloud with your existing GCP project.
 
+### kubectl
+From the official Kubernetes kubectl release:
 ```
-kops update cluster ksoc.insecure.k8s.local --yes --state gs://ksoc-insecure-dev/
+wget -O kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
 ```
 
-The cluster should now be up and running. Go to `Compute Engine` ->
-`VM Instances` to view the cluster nodes. `kubectl` in your Cloud Shell session
-should also be configured automatically.
+## 2.Launch a Cluster
+
+In the `examples/kops` directory, `cd` into your cloud provider of choice and run the following command (this example is for GCP)"
+```
+./kops_gcp_setup.sh  your-gcp-billing-account-id new-project-id unique-state-store-id"
+```
+This will go through the necessary steps to create a kube-goat cluster in your GCP account.
+
+*This cluster runs using two Compute VMs and a single bucket for data storage. It is not free! You can always sign up with GCP to get $300 in credit for testing purposes*
+
+The cluster should now be up and running. Go to `Compute Engine` -> `VM Instances` to view the cluster nodes. If you are wondering how you got your kubectl configured to the this cluster, KOPS does that for you. It exports a kubecfg file for a cluster from the state store to your ~/.kube/config 
 
 ```
 kubectl get pods --all-namespaces
 ```
 
-### 3. Delete the Cluster
-
+## 3. Delete the Cluster
+Use `kops` to delete the running cluster:
 ```
-kops delete cluster ksoc.insecure.k8s.local --yes
+kops delete cluster kube-goat.k8s.local --yes
 ```
-
-#### IF NO STATE FILE EXISTS OR INSTALLING FROM SCRATCH DO THE FOLLOWING
-
-This isn't necessary if the state file exists...you shouldn't have to do this.
-
+Optionally, you can delete the entire GCP project:
 ```
-PROJECT=`gcloud config get-value project` && \
-export KOPS_FEATURE_FLAGS=AlphaAllowGCE && \
-kops create cluster ksoc.insecure.k8s.local --zones us-west1-a --state gs://ksoc-insecure-dev/ --project=${PROJECT} --kubernetes-version=1.11.1 --node-count 1 && \
-export KOPS_STATE_STORE=gs://ksoc-insecure-dev/
+gcloud projects delete <project_id> -q
 ```

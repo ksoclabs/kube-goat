@@ -1,24 +1,23 @@
 apiVersion: kops/v1alpha2
 kind: Cluster
 metadata:
-  creationTimestamp: 2019-04-06T16:15:48Z
-  name: mist8ke.k8s.local
+  creationTimestamp: 2019-05-20T20:03:44Z
+  name: kube-goat.k8s.local
 spec:
   api:
     loadBalancer:
       type: Public
   authorization:
-    alwaysAllow: {}
+    rbac: {}
   channel: stable
   cloudProvider: gce
-  configBase: gs://mist8ke-configs/mist8ke.k8s.local
   etcdClusters:
   - etcdMembers:
-    - instanceGroup: master-us-west1-a
+    - instanceGroup: master-us-central1-a
       name: a
     name: main
   - etcdMembers:
-    - instanceGroup: master-us-west1-a
+    - instanceGroup: master-us-central1-a
       name: a
     name: events
   iam:
@@ -28,17 +27,17 @@ spec:
     anonymousAuth: true
   kubernetesApiAccess:
   - 0.0.0.0/0
-  kubernetesVersion: 1.12.1
-  masterPublicName: api.mist8ke.k8s.local
+  kubernetesVersion: 1.11.1
+  masterPublicName: api.kube-goat.k8s.local
   networking:
     kubenet: {}
   nonMasqueradeCIDR: 100.64.0.0/10
-  project: mistak-236815
+  project: {{PROJECT_ID}}
   sshAccess:
   - 0.0.0.0/0
   subnets:
-  - name: us-west1
-    region: us-west1
+  - name: us-central1
+    region: us-central1
     type: Public
   topology:
     dns:
@@ -47,35 +46,34 @@ spec:
     nodes: public
 
 ---
-
 apiVersion: kops/v1alpha2
 kind: InstanceGroup
 metadata:
-  creationTimestamp: 2019-04-06T16:15:51Z
+  creationTimestamp: 2019-05-20T22:13:45Z
   labels:
-    kops.k8s.io/cluster: mist8ke.k8s.local
-  name: master-us-west1-a
+    kops.k8s.io/cluster: kube-goat.k8s.local
+  name: master-us-central1-a
 spec:
   image: cos-cloud/cos-stable-65-10323-99-0
   machineType: n1-standard-1
-  maxSize: 3
-  minSize: 2
+  maxSize: 1
+  minSize: 1
   nodeLabels:
-    kops.k8s.io/instancegroup: master-us-west1-a
+    kops.k8s.io/instancegroup: master-us-central1-a
   role: Master
   subnets:
-  - us-west1
+  - us-central1
   zones:
-  - us-west1-a
+  - us-central1-a
 
 ---
 
 apiVersion: kops/v1alpha2
 kind: InstanceGroup
 metadata:
-  creationTimestamp: 2019-04-06T16:15:55Z
+  creationTimestamp: 2019-05-20T22:13:46Z
   labels:
-    kops.k8s.io/cluster: mist8ke.k8s.local
+    kops.k8s.io/cluster: kube-goat.k8s.local
   name: nodes
 spec:
   image: cos-cloud/cos-stable-65-10323-99-0
@@ -86,6 +84,6 @@ spec:
     kops.k8s.io/instancegroup: nodes
   role: Node
   subnets:
-  - us-west1
+  - us-central1
   zones:
-  - us-west1-a
+  - us-central1-a
