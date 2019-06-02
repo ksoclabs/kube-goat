@@ -1,6 +1,8 @@
-# Kube-Goat
+# kube-goat
+<img src="https://github.com/kube-goat/kube-goat/raw/master/logo/kube-goat-logo.png" width="175">
 
-A deliberately vulnerable Kubernetes cluster for testing purposes
+A deliberately vulnerable Kubernetes cluster
+
 
 ## Table of Contents
 
