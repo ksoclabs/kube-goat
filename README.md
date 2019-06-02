@@ -1,5 +1,4 @@
-# kube-goat
-<img src="https://github.com/ksoclabs/kube-goat/raw/master/logo/kube-goat-logo.png" width="350">
+<img src="https://github.com/ksoclabs/kube-goat/raw/master/logo/kube-goat-logo.png" width="400">
 
 A deliberately vulnerable Kubernetes cluster
 
