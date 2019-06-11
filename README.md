@@ -2,7 +2,6 @@
 
 A deliberately vulnerable Kubernetes cluster
 
-
 ## Table of Contents
 
 <!-- vim-markdown-toc GFM -->
@@ -24,4 +23,3 @@ To learn more about securing Kubernetes clusters, the following is a non-compreh
 - [Kubernetes Security](https://kubernetes-security.info)
 - [Kubernetes Security Best-Practices](https://dev.to/petermbenjamin/kubernetes-security-best-practices-hlk)
 - [Kubernetes Security Hands-On Labs](https://github.com/ManicodeSecurity/Defending-DevOps)
-
