@@ -83,6 +83,12 @@ spec:
   nodeLabels:
     kops.k8s.io/instancegroup: nodes
   role: Node
+  fileAssets:
+  - name: api-config
+    path: /var/lib/google/api
+    roles: [Node] 
+    content: |
+      the-key-18843241351
   subnets:
   - us-central1
   zones:
