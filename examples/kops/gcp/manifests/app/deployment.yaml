@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: link-unshorten
+  labels:
+    app: unshorten-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: unshorten-api
+  template: 
+    metadata:
+      labels:
+        app: unshorten-api
+    spec:
+      containers:
+      - name: unshorten-api-container
+        image: "jmbmxer/link-unshorten:0.1"
+        imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /api
+          name: unshorten-volume
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+      volumes:
+        - name: unshorten-volume
+          hostPath:
+            path: /var/lib/google
+            type: Directory
