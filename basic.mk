@@ -9,4 +9,3 @@ fmt: ## Format files
 		--prose-wrap always \
 		--write \
 		*.md
-
