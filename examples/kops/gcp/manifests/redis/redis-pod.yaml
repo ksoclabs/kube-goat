@@ -5,7 +5,7 @@ metadata:
 spec:
   containers:
   - name: redis
-    image: us.gcr.io/kube-goat-prod/redis:0.1
+    image: us.gcr.io/{{PROJECT_ID}}/redis:0.1
     imagePullPolicy: Always
     env:
     - name: MASTER
