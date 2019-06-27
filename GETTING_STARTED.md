@@ -1,7 +1,7 @@
 # Getting Started
 
 This document details the process of getting started with Kube-Goat in a local
-environment using Kind or a public cloud provider (GCP and AWS).
+environment using Kind or a public cloud provider (GCP and AWS). 
 
 <!-- TOC -->
 

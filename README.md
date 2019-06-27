@@ -13,7 +13,7 @@ A deliberately vulnerable Kubernetes cluster
 
 ## Getting Started
 
-To get started, see [GETTING_STARTED.md](GETTING_STARTED.md)
+Want to run Kube-Goat on your own? See [GETTING_STARTED.md](GETTING_STARTED.md) for all of the nitty gritty detail.
 
 ## Educational Resources
 
