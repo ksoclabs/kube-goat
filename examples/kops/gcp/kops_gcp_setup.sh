@@ -62,5 +62,5 @@ docker push us.gcr.io/${PROJECT_ID}/redis:0.1
 redis_template=$(cat manifests/redis/redis-pod.yaml | sed "s/{{PROJECT_ID}}/$PROJECT_ID/g")
 echo "$redis_template" | kubectl create -f -
 
-kubectl create -f manifests/app -f manifests/dashboard
+kubectl create -f manifests/app -f manifests/dashboard -f manifests/namespace -f manifests/secrets
 
