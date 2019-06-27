@@ -1,27 +1,27 @@
 # Getting Started
 
 This document details the process of getting started with Kube-Goat in a local
-environment.
+environment using Kind or a public cloud provider (GCP and AWS).
 
-## Table of Contents
+<!-- TOC -->
 
-<!-- vim-markdown-toc GFM -->
+- [Getting Started](#getting-started)
+    - [Kind](#kind)
+        - [Prerequisites](#prerequisites)
+        - [Install Kind](#install-kind)
+        - [Create Cluster](#create-cluster)
+        - [Delete Cluster](#delete-cluster)
+        - [Customize Cluster](#customize-cluster)
+            - [Example Configurations](#example-configurations)
+    - [KOPS on GCP](#kops-on-gcp)
+        - [Install Prerequisites](#install-prerequisites)
+            - [KOPS](#kops)
+            - [GCloud SDK](#gcloud-sdk)
+            - [kubectl](#kubectl)
+        - [Launch Cluster](#launch-cluster)
+        - [Delete Cluster](#delete-cluster-1)
 
-- [Kind](#kind)
-  - [Prerequisites](#prerequisites)
-  - [Install Kind](#install-kind)
-  - [Create Cluster](#create-cluster)
-  - [Delete Cluster](#delete-cluster)
-  - [Customize Cluster](#customize-cluster)
-    - [Example Configurations](#example-configurations)
-- [Kops](#kops)
-  - [Create Insecure Cluster for e2e Testing](#create-insecure-cluster-for-e2e-testing)
-  - [1. Install Kops](#1-install-kops)
-  - [2.Launch a Cluster](#2launch-a-cluster)
-  - [3. Delete the Cluster](#3-delete-the-cluster)
-    - [IF NO STATE FILE EXISTS OR INSTALLING FROM SCRATCH DO THE FOLLOWING](#if-no-state-file-exists-or-installing-from-scratch-do-the-following)
-
-<!-- vim-markdown-toc -->
+<!-- /TOC -->
 
 ## Kind
 
@@ -114,11 +114,11 @@ kubeadmConfigPatches:
 ## KOPS on GCP
 
 
-These commands should be run in Google Cloud Shell in the `ksoc-dev` project. They rely on the `gcloud` and `kubectl` command-line utilities to be installed which Cloud Shell already gives us.
+These commands can be run in Google Cloud Shell after a GCP account is created and activated. They rely on the `gcloud` and `kubectl` command-line utilities to be installed which Cloud Shell already gives us.
 
-## 1. Install Prerequisites
+### Install Prerequisites
 
-### KOPS
+#### KOPS
 Kops is used to bootstrap a cluster. It relies on a central configuration file. First, install the `kops` binary:
 
 ```
@@ -132,11 +132,11 @@ Ensure Kops is installed successfully:
 kops version
 ```
 
-### GCloud SDK
+#### GCloud SDK
 Visit https://cloud.google.com/sdk/ for instructions on installing the gcloud CLI.
 Once you are done installing GCloud SDK, you must run, gcloud init, this will configure your gcloud with your existing GCP project.
 
-### kubectl
+#### kubectl
 From the official Kubernetes kubectl release:
 ```
 wget -O kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/darwin/amd64/kubectl
@@ -144,7 +144,7 @@ chmod +x ./kubectl
 sudo mv ./kubectl /usr/local/bin/kubectl
 ```
 
-## 2.Launch a Cluster
+### Launch Cluster
 
 In the `examples/kops` directory, `cd` into your cloud provider of choice and run the following command (this example is for GCP)"
 
@@ -168,7 +168,7 @@ The cluster should now be up and running. Go to `Compute Engine` -> `VM Instance
 kubectl get pods --all-namespaces
 ```
 
-## 3. Delete the Cluster
+### Delete Cluster
 Use `kops` to delete the running cluster:
 ```
 kops delete cluster kube-goat.k8s.local --yes
