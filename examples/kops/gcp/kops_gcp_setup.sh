@@ -31,6 +31,9 @@ sleep 4
 gcloud services enable compute.googleapis.com
 gcloud services enable containerregistry.googleapis.com
 
+#open kubelet ports
+gcloud compute firewall-rules create allow-kubelet --allow tcp:10255,tcp:10250
+
 #create bucket for state store
 echo $BUCKET_ID
 gsutil mb -p $PROJECT_ID gs://${BUCKET_ID}
