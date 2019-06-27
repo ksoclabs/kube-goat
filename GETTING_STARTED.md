@@ -147,9 +147,17 @@ sudo mv ./kubectl /usr/local/bin/kubectl
 ## 2.Launch a Cluster
 
 In the `examples/kops` directory, `cd` into your cloud provider of choice and run the following command (this example is for GCP)"
+
+Ensure you are authenticated to the GCP account for Kube-Goat
 ```
-./kops_gcp_setup.sh  your-gcp-billing-account-id new-project-id unique-state-store-id"
+gcloud auth login
 ```
+
+Run the following script to spin up Kube-Goat in GCP. Name the Project and Bucket as you wish.
+```
+./kops_gcp_setup.sh <GCP-Project-ID> <GCP-Bucket-ID>
+```
+
 This will go through the necessary steps to create a kube-goat cluster in your GCP account.
 
 *This cluster runs using two Compute VMs and a single bucket for data storage. It is not free! You can always sign up with GCP to get $300 in credit for testing purposes*
