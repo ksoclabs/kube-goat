@@ -9,10 +9,9 @@ environment using Kind or a public cloud provider (GCP and AWS).
     - [Kind](#kind)
         - [Prerequisites](#prerequisites)
         - [Install Kind](#install-kind)
-        - [Create Cluster](#create-cluster)
+        - [Create KubeGoat Cluster](#create-kubegoat-cluster)
+        - [Deploy Resources](#deploy-resources)
         - [Delete Cluster](#delete-cluster)
-        - [Customize Cluster](#customize-cluster)
-            - [Example Configurations](#example-configurations)
     - [KOPS on GCP](#kops-on-gcp)
         - [Install Prerequisites](#install-prerequisites)
             - [KOPS](#kops)
@@ -47,72 +46,24 @@ You can download & install pre-compiled versions of `kind` from their GitHub
 
 Alternatively, you may build `kind` by running `go get -u -v sigs.k8s.io/kind`
 
-### Create Cluster
+### Create KubeGoat Cluster
 
-1. `kind create cluster`
-1. `export KUBECONFIG="$(kind get kubeconfig-path --name="kind""`
+1. `kind create cluster --name=kubegoat --config=config.yaml`
+
+2. `export KUBECONFIG="$(kind get kubeconfig-path --name="kubegoat")"`
+
+### Deploy Resources
+
+In the `manifests` directory run the following command:
+
+`kubectl create -f app -f dashboard -f namespace -f secrets`
 
 ### Delete Cluster
 
-1. `kind delete cluster`
+`kind delete cluster --name="kubegoat"`
 
-### Customize Cluster
-
-`kind` supports custom cluster configurations via its
-[v1alphav3](https://godoc.org/sigs.k8s.io/kind/pkg/cluster/config/v1alpha3) API
-group.
-
-#### Example Configurations
-
-To spin up a 3 control-plane + 3 worker node, create the following file, then
-apply with `kind create cluster --name kind --config config.yaml`
-
-```
-kind: Cluster
-apiVersion: kind.sigs.k8s.io/v1alpha3
-nodes:
-- role: control-plane
-- role: control-plane
-- role: control-plane
-- role: worker
-- role: worker
-- role: worker
-```
-
-To use Calico CNI instead of `kind`'s default of Flannel, create the following
-file, then apply accordingly:
-
-```
-kind: Cluster
-apiVersion: kind.sigs.k8s.io/v1alpha3
-nodes:
-- role: control-plane
-  extraMounts:
-  - containerPath: /kind/manifests/default-cni.yaml
-    hostPath: /path/to/custom-cni.yaml
-    readOnly: true
-    type: File
-- role: control-plane
-- role: worker
-- role: worker
-kubeadmConfigPatches:
-- |
-  apiVersion: kubeadm.k8s.io/v1beta1
-  kind: ClusterConfiguration
-  metadata:
-    name: config
-  networking:
-    podSubnet: "192.168.0.0/16"
-- |
-  apiVersion: kubeproxy.config.k8s.io/v1alpha1
-  kind: KubeProxyConfiguration
-  metadata:
-    name: config
-  mode: "ipvs"
-```
 
 ## KOPS on GCP
-
 
 These commands can be run in Google Cloud Shell after a GCP account is created and activated. They rely on the `gcloud` and `kubectl` command-line utilities to be installed which Cloud Shell already gives us.
 
