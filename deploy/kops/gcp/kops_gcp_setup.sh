@@ -59,11 +59,11 @@ while true; do
 done  
 
 #launch k8s resources
-docker build -t us.gcr.io/${PROJECT_ID}/redis:0.1 ../../manifests/redis
+docker build -t us.gcr.io/${PROJECT_ID}/redis:0.1 ../../../manifests/redis
 docker push us.gcr.io/${PROJECT_ID}/redis:0.1
 
-redis_template=$(cat ../../manifests/redis/redis-pod.yaml | sed "s/{{PROJECT_ID}}/$PROJECT_ID/g")
+redis_template=$(cat ../../../manifests/redis/redis-pod.yaml | sed "s/{{PROJECT_ID}}/$PROJECT_ID/g")
 echo "$redis_template" | kubectl create -f -
 
-kubectl create -f ../../manifests/app -f ../../manifests/dashboard -f ../../manifests/namespace -f ../../manifests/secrets
+kubectl create -f ../../../manifests/app -f ../../../manifests/dashboard -f ../../../manifests/namespace -f ../../../manifests/secrets
 
