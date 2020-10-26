@@ -31,7 +31,7 @@ not having to deal with virtualization.
 ### Prerequisites
 
 - Docker:
-  - On Linux: `curl -fsSL https://get.docker.com`
+  - On Linux: `curl -fsSL https://get.docker.com | sh`
   - On MacOS: `brew install docker`
 - Kubectl:
   - On Linux:
